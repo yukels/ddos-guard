@@ -1,0 +1,35 @@
+{
+	"name": "ddos-guard development",
+	"dockerComposeFile": "docker-compose-dev.yml",
+	"service": "ddos-guard-dev",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace/go/src/github.com/yukels,type=cached",
+	"workspaceFolder": "/workspace/go/src/github.com/yukels",
+	"shutdownAction": "stopCompose",
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind:cached",
+		"source=${localEnv:HOME}/.aws,target=/root/.aws,type=bind:cached"
+	],
+	"containerEnv": {
+		"USER": "${localEnv:USER}"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"dockerDashComposeVersion": "v2",
+			"version": "latest",
+			"moby": false
+		},
+		"ghcr.io/devcontainers/features/aws-cli:latest": {}
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.shell.linux": "/bin/bash",
+			},
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"golang.go",
+				"eamodio.gitlens"
+			]
+		}
+	}
+}

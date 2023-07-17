@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  namespace: ddos
+  labels:
+    app: hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: service-account-hello
+      schedulerName: default-scheduler
+      containers:
+      - name: ddos-guard
+        image: yukels97/ddos-guard:latest
+        ports:
+        - name: http
+          containerPort: 8081
+        env:
+        - name: ENVIRONMENT
+          value: production
+        - name: COMPONENT
+          value: hello
+        - name: LOG_LEVEL
+          value: info
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        livenessProbe:
+          failureThreshold: 2
+          httpGet:
+            port: http
+            path: /ddos-guard-health
+          periodSeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          failureThreshold: 2
+          httpGet:
+            port: http
+            path: /ddos-guard-health
+          periodSeconds: 10
+          timeoutSeconds:
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /etc/ddos-guard
+          name: ddos-guard-config
+      - name: hello
+        image: yukels97/hello:latest
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+          limits:
+            cpu: "1"
+            memory: "200Mi"
+          requests:
+            cpu: "500m"
+            memory: "100Mi"
+        livenessProbe:
+          failureThreshold: 2
+          httpGet:
+            port: http
+            path: /hello
+          periodSeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          failureThreshold: 2
+          httpGet:
+            port: http
+            path: /hello
+          periodSeconds: 10
+          timeoutSeconds:
+        imagePullPolicy: Always
+      volumes:
+        - name: ddos-guard-config
+          configMap:
+            name: ddos-guard-config
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 10

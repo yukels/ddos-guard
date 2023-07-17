@@ -1,0 +1,19 @@
+version: "3.4"
+services:
+  ddos-guard-dev:
+    container_name: ddos-guard-dev
+    build:
+      context: ../
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    volumes:
+      - ../:/workspace/go/src/github.com/yukels:cached
+    ports:
+      - "8888:8081"
+    networks:
+      - default
+      - microservices_interoperability
+
+networks:
+  microservices_interoperability:
+    name: microservices_interoperability
