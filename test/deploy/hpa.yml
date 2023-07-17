@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hello
+  namespace: ddos
+spec:
+  maxReplicas: 2
+  minReplicas: 1
+  scaleTargetRef:
+    name: hello
+    apiVersion: apps/v1
+    kind: Deployment
+  targetCPUUtilizationPercentage: 80

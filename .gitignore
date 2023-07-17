@@ -19,3 +19,7 @@
 
 # Go workspace file
 go.work
+
+# my private files
+devops/config/private
+test/deploy-private

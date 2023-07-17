@@ -1,0 +1,27 @@
+{
+    "cSpell.words": [
+        "bson",
+        "Debugf",
+        "Equalf",
+        "yukels"
+    ],
+    "cSpell.ignoreWords": [
+        "chunk",
+        "read",
+        "bson",
+        "Debugf",
+        "Infof"
+    ],
+    "go.testFlags": [
+        "-gcflags=all=-l"
+    ],
+    "terminal.integrated.scrollback": 10000,
+    "files.exclude": {
+        "utils/**": true
+    },
+    "gopls": {
+        "build.directoryFilters": [
+            "-utils"
+        ]
+    }
+}
