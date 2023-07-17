@@ -221,12 +221,11 @@ BYPASS="false"
 `BYPASS` provides the fast solution to skip DDOS guard proxy mechanism in case of unexpected behavior or bugs.
 
 ## Deployment
-You can find the latest docker image of the DDOS guard in [Docker Hub](https://hub.docker.com/repository/docker/yukels97/ddos-guard)
-repository. The [Dockerfile](ddos-guard/Dockerfile) based on *Alpine Linux* image and was compiled for two platforms: Mac and Linux
+You can find the latest docker image of the ddos guard in [Docker Hub](https://hub.docker.com/repository/docker/yukels97/ddos-guard)
+repository. The [Dockerfile](ddos-guard/Dockerfile) is based on *Alpine Linux* image and was compiled for two platforms: Mac and Linux
 (linux/amd64, linux/arm64).
 
-You can find under the [deploy](test/deploy) folder sample of deployment to AWS kubernetes cluster. 
+You can find under the [deploy](test/deploy) folder sample of deployment to AWS Kubernetes cluster. 
 > **_NOTE:_**  If you are using k8s HPA, you should specify the value of *targetCPUUtilizationPercentage* smaller than
-the *UpperBound* value of *PodCPU* query (in th example 80 and 90, respectively).
-
+the *UpperBound* value of *PodCPU* query (in the example 80 and 90, respectively).
 
