@@ -144,8 +144,8 @@ func (g *Guard) updateFilterRatio(ctx context.Context, ratioStep int64) {
 }
 
 func (g *Guard) nTopUsers(ctx context.Context) (map[string]*UserStats, map[string]*UserStats) {
-	return g.nTopUsersBy(ctx, func(i, j *UserStats) bool { return i.Count < j.Count }),
-		g.nTopUsersBy(ctx, func(i, j *UserStats) bool { return i.DurationMs < j.DurationMs })
+	return g.nTopUsersBy(ctx, func(i, j *UserStats) bool { return i.Count > j.Count }),
+		g.nTopUsersBy(ctx, func(i, j *UserStats) bool { return i.DurationMs > j.DurationMs })
 }
 
 func (g *Guard) nTopUsersBy(ctx context.Context, compare UserCompareFunc) map[string]*UserStats {
